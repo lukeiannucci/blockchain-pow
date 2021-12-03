@@ -18,6 +18,14 @@
                 "cwd": "${workspaceFolder}/server"
             },
             "command": "make"
+        },
+        {
+            "label": "network make",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/network"
+            },
+            "command": "make"
         }
     ]
 }
