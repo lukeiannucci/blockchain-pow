@@ -2,6 +2,7 @@
 #include <boost/asio.hpp>
 #include <memory>
 #include <queue>
+#include "../../protobuf/block.pb.h"
 using boost::asio::ip::tcp;
 namespace io = boost::asio;
 
@@ -26,7 +27,7 @@ public:
     }
 
     void Start(MessageHandler &&messageHandler, ErrorHandler &&errorHandler);
-    void Post(const std::string &message);
+    void Post(const block::block &proposedBlock);
 
 private:
     explicit TCPConnection(io::ip::tcp::socket &&socket);

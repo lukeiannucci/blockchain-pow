@@ -1,5 +1,5 @@
 output: TCPConnection.o TCPServer.o TCPClient.o network.o
-	g++ TCPServer.o TCPConnection.o TCPClient.o network.o -lboost_system -lpthread -g -o s
+	g++ TCPServer.o TCPConnection.o TCPClient.o network.o ../protobuf/block.pb.cc -lprotobuf -lboost_system -lpthread -g -o s
 
 network.o: network.cpp
 	g++ -g -c network.cpp

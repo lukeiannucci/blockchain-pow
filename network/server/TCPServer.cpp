@@ -21,12 +21,12 @@ int TCPServer::Run()
   return 0;
 }
 
-void TCPServer::Broadcast(const std::string &message)
+void TCPServer::Broadcast(const block::block &proposedBlock)
 {
   for (auto &connection : _connections)
   {
     std::cout << "Posting to connection: " + connection->GetUsername() + "\n";
-    connection->Post(message);
+    connection->Post(proposedBlock);
   }
 }
 

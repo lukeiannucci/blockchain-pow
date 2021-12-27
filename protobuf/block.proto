@@ -1,0 +1,9 @@
+//projectmanagement.proto
+package block;
+message block
+{
+    required string fromAddress = 1;
+    required string toAddress = 2;
+    required string amount = 3;
+    required string fee = 4;
+}

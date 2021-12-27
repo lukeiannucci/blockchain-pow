@@ -18,10 +18,12 @@ void TCPConnection::Start(MessageHandler &&messageHandler, ErrorHandler &&errorH
     asyncRead();
 }
 
-void TCPConnection::Post(const std::string &message)
+void TCPConnection::Post(const block::block &proposedBlock)
 {
     bool queueIdle = _outgoingMessages.empty();
-    _outgoingMessages.push(message);
+    std::string binary;
+    proposedBlock.SerializeToString(&binary);
+    _outgoingMessages.push(binary);
 
     if (queueIdle)
     {
@@ -46,6 +48,7 @@ void TCPConnection::onRead(boost::system::error_code ec, size_t bytesTranferred)
     }
 
     std::stringstream message;
+    
     message << _username << ": " << std::istream(&_streamBuf).rdbuf();
     _streamBuf.consume(bytesTranferred);
 

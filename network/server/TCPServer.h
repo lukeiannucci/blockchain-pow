@@ -5,6 +5,7 @@
 #include <optional>
 #include <unordered_set>
 #include "TCPConnection.h"
+#include "../../protobuf/block.pb.h"
 namespace io = boost::asio;
 
 enum class IPV
@@ -24,7 +25,7 @@ public:
 
     int Run();
     void Stop();
-    void Broadcast(const std::string &message);
+    void Broadcast(const block::block &proposedBlock);
 
 private:
     void startAccept();

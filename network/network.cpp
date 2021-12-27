@@ -22,14 +22,26 @@ int main(int argc, char *argv[])
 
     server.OnClientMessage = [&server](const std::string &message)
     {
-        server.Broadcast(message);
+        block::block block;
+        block.ParseFromString(message);
+        std::cout << "block from add: " + block.fromaddress() + "\n";
+        std::cout << "block to add: " + block.toaddress() + "\n";
+        std::cout << "block amt: " + block.amount() + "\n";
+        std::cout << "block amt: " + block.fee() + "\n";
+        server.Broadcast(block);
     };
 
     TCPClient client("localhost", client_port);
     client.OnMessage = [&](const std::string &message)
     {
         std::cout << "message: " + message + "\n";
-        server.Broadcast(message);
+        block::block block;
+        block.ParseFromString(message);
+        std::cout << "block from add: " + block.fromaddress() + "\n";
+        std::cout << "block to add: " + block.toaddress() + "\n";
+        std::cout << "block amt: " + block.amount() + "\n";
+        std::cout << "block amt: " + block.fee() + "\n";
+        server.Broadcast(block);
     };
     std::thread t2{[&client]()
                    { client.Run(); }};
@@ -40,12 +52,16 @@ int main(int argc, char *argv[])
     {
         std::string message;
         getline(std::cin, message);
-
+        block::block block;
+        block.set_amount("1");
+        block.set_fee("2");
+        block.set_fromaddress("0x01");
+        block.set_toaddress("0x02");
         if (message == "quit")
             break;
         message += "\n";
 
-        server.Broadcast(message);
+        server.Broadcast(block);
     }
 
     client.Stop();
